@@ -5,6 +5,7 @@ const app = express();
 const config = require("./config");
 const watchRoutes = require("./routes/watch/watch.routes");
 const customerRoutes = require("./routes/user/customer.routes");
+const authRoutes = require("./routes/auth/auth.routes");
 const errorHandler = require("./middleware/errorHandler");
 const db = require("./database/mongoose");
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/watches", watchRoutes);
 app.use("/api/customers", customerRoutes);  
+app.use("/api/auth", authRoutes); 
 
 
 // Health check

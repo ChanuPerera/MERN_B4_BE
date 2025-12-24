@@ -31,39 +31,65 @@ exports.loginUser = async (req, res, next) => {
     if (!isPasswordMatch) {
       return res.status(401).json({
         success: false,
-        message: "Incorrect Password",
+        message: "Email or password is Incorrect",
       });
     }
 
     //////// Create JWT token
     const token = jwt.sign(
-        {
-            id: customer._id,
-            email: customer.email,
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: "7d",
-        }
+      {
+        id: customer._id,
+        email: customer.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
     );
 
-
-/////////// Remove password before sending response
+    /////////// Remove password before sending response
     const customerData = customer.toObject();
     delete customerData.password;
 
-
-     return res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "Login successfully!",
       customer: customerData,
       token,
     });
-
-
-
-
   } catch (error) {
     next(error);
+  }
+};
+
+////// Customer Logout
+
+exports.logoutUser = async (req, res, next) => {
+  try {
+    /// id the token  stored in cookies
+    res.clearCookies("token");
+
+    return res.status(200).json({
+      success: true,
+      message: "Log out successfully!",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+///// Get logged in customer details
+
+exports.getMe = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: req.customer,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

@@ -56,9 +56,9 @@ exports.getWatchByModel = async (req, res, next) => {
 
 exports.createWatch = async (req, res, next) => {
   try {
-    const { modelNumber, brand, price, type } = req.body;
+    const { modelNumber, brand, price, type , imageSrc} = req.body;
     ///// basic validations
-    if (!modelNumber || !brand || price === undefined || type === undefined) {
+    if (!modelNumber || !brand || price === undefined || type === undefined || !imageSrc) {
       return res.status(200).json({
         success: false,
         message: "modelNumber , brand and price and type are required",
@@ -85,6 +85,7 @@ exports.createWatch = async (req, res, next) => {
       brand,
       type: normalizesTypes,
       price: Number(price),
+      imageSrc: imageSrc.trim(),
     });
     await watch.save();
     return res.status(201).json({

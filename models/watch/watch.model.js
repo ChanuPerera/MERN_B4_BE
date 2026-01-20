@@ -19,6 +19,11 @@ const WatchSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageSrc:{
+      type: String,
+      required: true,
+      trim: true,
+    }
   },
   {
     timestamps: true,

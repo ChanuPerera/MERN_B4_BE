@@ -6,6 +6,7 @@ const config = require("./config");
 const watchRoutes = require("./routes/watch/watch.routes");
 const customerRoutes = require("./routes/user/customer.routes");
 const authRoutes = require("./routes/auth/auth.routes");
+const orderRoutes = require("./routes/order/order.routes");
 const errorHandler = require("./middleware/errorHandler");
 const db = require("./database/mongoose");
 
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
 app.use("/api/watches", watchRoutes);
 app.use("/api/customers", customerRoutes);  
 app.use("/api/auth", authRoutes); 
+app.use("/api/order", orderRoutes); 
 
 
 // Health check

@@ -8,6 +8,7 @@ router.get('/', controller.getAllWatches);
 // router.get('/:modelNumber', controller.getWatchByModel);
 router.post('/create-watch', controller.createWatch);
 router.put('/:modelNumber', controller.updateWatch);
+router.get('/get-all-watches', controller.getAllWatches);
 // router.delete('/delete-watch/:modelNumber', controller.deleteWatch); 
 // router.put('/:modelNumber', controller.updateWatch); 
 

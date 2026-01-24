@@ -7,8 +7,11 @@ const watchRoutes = require("./routes/watch/watch.routes");
 const customerRoutes = require("./routes/user/customer.routes");
 const authRoutes = require("./routes/auth/auth.routes");
 const orderRoutes = require("./routes/order/order.routes");
+const uploadRoutes = require("./routes/upload/upload.routes");
 const errorHandler = require("./middleware/errorHandler");
 const db = require("./database/mongoose");
+const mongoose = require("mongoose");
+const {connectGridFS} = require("./config/gridfs")
 
 // ENABLE CORS
 app.use(cors({
@@ -30,6 +33,7 @@ app.use("/api/watches", watchRoutes);
 app.use("/api/customers", customerRoutes);  
 app.use("/api/auth", authRoutes); 
 app.use("/api/order", orderRoutes); 
+app.use("/api/media", uploadRoutes); 
 
 
 // Health check
@@ -48,6 +52,11 @@ const startServer = async () => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
+
+    mongoose.connection.once("open", () => {
+      connectGridFS();
+      console.log("Connected to GridFS");
+    })
 
   } catch (error) {
     console.error("Failed to start server", error);
